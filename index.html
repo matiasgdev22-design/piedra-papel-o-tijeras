@@ -1,14 +1,46 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Piedra, Papel o Tijeras.</title>
-    <script src="java.js"></script>
+    <title>Piedra, Papel o Tijera.</title>
+    <script src="java.js" defer></script>
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    
-    
+    <main  class="game-container">
+        <h1>Piedra Papel o Tijeras</h1>
+        <p class="subtitle">¡Elegi tu movimiento!</p> 
+        
+        <section class="scoreboard">
+            <div>
+                <h2>Jugador</h2>
+                <p id="human-score">0</p>
+            </div>
+        </section>
+
+        <section class="scoreboard2">
+        <div>
+            <h2>Computadora</h2>
+            <p id="computer-score">0</p>
+        </div>
+
+    </section>
+
+        <section class="choices">
+        <button class="choice" id="piedra">✊ Piedra</button>
+        <button class="choice" id="papel">✋ Papel</button>
+        <button class="choice" id="tijera">✌️ Tijera</button>
+    </section>
+
+    <section class="results">
+        <h2 id="round-result">¡Que comience el juego!</h2>
+        <p id="game-result">Primero elegí una opción.</p>
+    </section>
+
+    <button id="restart">Reiniciar partida</button>
+
+</main>
 
 </body>
 </html>

@@ -1,6 +1,8 @@
 
+
 let humanScore = 0;
 let computerScore = 0;
+let gameOver = false;
 
 
 function getComputerChoice() {
@@ -8,61 +10,103 @@ function getComputerChoice() {
     let number = Math.floor(Math.random() * 3);
 
     if (number === 0) {
-    return "rock";
+    return "piedra";
     }
 
     else if (number === 1) {
-    return "paper";
+    return "papel";
     }
 
     else {
-    return "scissors";
+    return "tijera";
     }
 }
-
-function getHumanChoice(){
-        let choice = prompt("Choose rock, paper or scissors");
-        return choice;  
-        
-    }
 
 function playRound(humanChoice, computerChoice){
     if (humanChoice === computerChoice) {
-        return "It's a tie!"; 
+        return "Empate!"; 
     }
-    if ((humanChoice === "rock" && computerChoice === "scissors") ||
-       (humanChoice === "scissors" && computerChoice === "paper") ||
-       (humanChoice === "paper" && computerChoice === "rock")){
+    if ((humanChoice === "piedra" && computerChoice === "tijera") ||
+       (humanChoice === "tijera" && computerChoice === "papel") ||
+       (humanChoice === "papel" && computerChoice === "piedra")){
            humanScore++;
-           return "you win!";
+           return "Ganaste!";
         }
         
         else if (
-            (humanChoice === "rock" && computerChoice === "paper") ||
-            (humanChoice === "scissors" && computerChoice === "rock") ||
-            (humanChoice === "paper" && computerChoice === "scissors")) {
+            (humanChoice === "piedra" && computerChoice === "papel") ||
+            (humanChoice === "tijera" && computerChoice === "piedra") ||
+            (humanChoice === "papel" && computerChoice === "tijera")) {
                 computerScore++;
-                return "Win Computer";
+                return "Ganó la Computadora";
             }           
 }
-            
-function playGame() {
-            for (let i = 0; i < 5; i++) {
-                let computerChoice = getComputerChoice();
-                let humanChoice = getHumanChoice();
-                let result = playRound(humanChoice, computerChoice);
-                console.log(result);
-            }
-            console.log("Final score:");
-            console.log("Human: " + humanScore);
-            console.log("Computer: " + computerScore);
+  const humanScoreElement=document.querySelector("#human-score");
+  const computerScoreElement=document.querySelector("#computer-score");
+  const roundResult = document.querySelector("#round-result");
+  const gameResult= document.querySelector("#game-result");
+  const restartButton= document.querySelector("#restart");
 
-            if (humanScore > computerScore){
-            return "you Win!";}
-            else if (humanScore < computerScore){
-            return "Win Computer!";}
-            else {
-            return "It's a tie!";}
+
+    const rockButton = document.querySelector("#piedra");
+    const paperButton = document.querySelector("#papel");
+    const scissorsButton = document.querySelector("#tijera");
+
+    rockButton.addEventListener("click",function() {
+        playGame("piedra");
+    });
+    paperButton.addEventListener("click",function() {
+        playGame("papel");
+    });
+    scissorsButton.addEventListener("click",function() {
+        playGame("tijera");
+    });
+    
+    function playGame(humanChoice) {
+        if (gameOver) {
+            return;
+        }
+        let computerChoice = getComputerChoice();
+        let result = playRound(humanChoice, computerChoice);
+        roundResult.textContent= result;
+        humanScoreElement.textContent= humanScore;
+        computerScoreElement.textContent= computerScore;
+        gameResult.textContent =
+    `Vos elegiste ${humanChoice} y la computadora eligió ${computerChoice}.`;
+
+    
+    if (humanScore === 5 || computerScore === 5) {
+        gameOver = true;
+
+    if (humanScore === 5) {
+            roundResult.textContent = "¡Felicitaciones! Ganaste la partida.";
+        } else {
+            roundResult.textContent = "¡La computadora ganó la partida!";
+        }
+
+        rockButton.disabled = true;
+        paperButton.disabled = true;
+        scissorsButton.disabled = true;
+    }
+
+    function restartGame() {
+        
+humanScore = 0;
+computerScore = 0;
+
+gameOver = false;
+
+humanScoreElement.textContent = humanScore;
+computerScoreElement.textContent = computerScore;
+
+roundResult.textContent = "¡Que comience el juego!";
+gameResult.textContent = "Primero elegí una opción.";
+
+rockButton.disabled = false;
+paperButton.disabled = false;
+scissorsButton.disabled = false;
+}
+
+restartButton.addEventListener("click", restartGame);
 
 }
-    console.log(playGame());
